@@ -1,68 +1,68 @@
 extends CharacterBody2D
 
+enum MoveDirection {NONE, UP, DOWN, LEFT, RIGHT}
+enum AnimationType {WALK, IDLE}
 
 const speed = 100
-var direction = "none"
 
 func _physics_process(delta: float):
 	player_movement(delta )
-	
-	
-func player_movement(delta):
+
+
+func player_movement(_delta):
 	if Input.is_action_pressed("ui_right"):
-		direction = "right"
-		play_anim(1)
+		play_anim(MoveDirection.RIGHT, AnimationType.WALK)
 		velocity.x = speed
 		velocity.y = 0
 	elif Input.is_action_pressed("ui_left"):
-		direction = "left"
-		play_anim(1)
+		play_anim(MoveDirection.LEFT, AnimationType.WALK)
 		velocity.x = -speed
 		velocity.y = 0
 	elif Input.is_action_pressed("ui_down"):
-		direction = "down"
-		play_anim(1)
+		play_anim(MoveDirection.DOWN, AnimationType.WALK)
 		velocity.x = 0
 		velocity.y = speed
 	elif Input.is_action_pressed("ui_up"):
-		direction = "up"
-		play_anim(1)
+		play_anim(MoveDirection.UP, AnimationType.WALK)
 		velocity.x = 0
 		velocity.y = -speed
 	else:
-		direction = "none"
-		play_anim(0)
+		play_anim(MoveDirection.NONE, AnimationType.IDLE)
 		velocity.x = 0
 		velocity.y = 0
-		
-	print(direction)
+
 	move_and_slide()
-	
-func play_anim(movement):
-	var dir = direction
-	var anim = $AnimatedSprite2D 
-	
-	if dir == "right":
-		anim.flip_h = false
-		if movement == 1:
+
+func play_anim(direction: MoveDirection, type: AnimationType):
+	print("direction: %s, type: %s" % [str(direction), str(type)])
+	var anim = $AnimatedSprite2D
+
+	anim.flip_h = false
+	anim.flip_v = false
+
+	if direction == MoveDirection.RIGHT:
+		if type == AnimationType.WALK:
 			anim.play("side_walk")
-		elif movement == 0:
+		elif type == AnimationType.IDLE:
 			anim.play("side_idle")
-	if dir == "left":
+	if direction == MoveDirection.LEFT:
 		anim.flip_h = true
-		if movement == 1:
-			anim.play("front_idle")
-		elif movement == 0:
+		if type == AnimationType.WALK:
+			anim.play("side_walk")
+		elif type == AnimationType.IDLE:
 			anim.play("side_idle")
-	if dir == "down":
-		anim.flip_h = false
-		if movement == 1:
-			anim.play("front_walk")
-		elif movement == 0:
-			anim.play("front_idle")
-	if dir == "left":
-		anim.flip_h = false
-		if movement == 1:
+	if direction == MoveDirection.UP:
+		if type == AnimationType.WALK:
 			anim.play("back_walk")
-		elif movement == 0:
+		elif type == AnimationType.IDLE:
+			anim.play("back_idle")
+	if direction == MoveDirection.DOWN:
+		if type == AnimationType.WALK:
+			anim.play("front_walk")
+		elif type == AnimationType.IDLE:
+			anim.play("front_idle")
+	if direction == MoveDirection.NONE:
+		if type == AnimationType.WALK:
+			anim.play("back_walk")
+		elif type == AnimationType.IDLE:
 			anim.play("back_idle")
