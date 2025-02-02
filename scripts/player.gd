@@ -39,7 +39,6 @@ func player_movement(_delta):
 	move_and_slide()
 
 func play_anim(type: AnimationType):
-	print("direction: %s, type: %s" % [str(direction), str(type)])
 	var anim = $AnimatedSprite2D
 
 	anim.flip_h = false

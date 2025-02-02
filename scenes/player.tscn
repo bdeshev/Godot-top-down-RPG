@@ -413,19 +413,27 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_piiph"]
-size = Vector2(7, 15)
+[sub_resource type="CircleShape2D" id="CircleShape2D_6357f"]
+radius = 4.0
 
 [node name="player" type="CharacterBody2D"]
 light_mask = 512
 visibility_layer = 512
+y_sort_enabled = true
+position = Vector2(0, 2)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_gpt4o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+light_mask = 9
+visibility_layer = 9
+y_sort_enabled = true
+position = Vector2(0, -17)
 sprite_frames = SubResource("SpriteFrames_wyjs7")
 animation = &"front_idle"
 autoplay = "front_idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 9)
-shape = SubResource("RectangleShape2D_piiph")
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_6357f")
