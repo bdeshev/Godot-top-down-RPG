@@ -1,7 +1,7 @@
 [gd_scene load_steps=20 format=3 uid="uid://crf386xhybwe5"]
 
 [ext_resource type="Texture2D" uid="uid://ct6e568kjq6om" path="res://assets/mystic_woods_free_2.2/sprites/characters/slime.png" id="1_2gg3u"]
-[ext_resource type="Script" path="res://scenes/slime.gd" id="1_v2f7u"]
+[ext_resource type="Script" path="res://scripts/slime.gd" id="1_v2f7u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ouhk"]
 atlas = ExtResource("1_2gg3u")
