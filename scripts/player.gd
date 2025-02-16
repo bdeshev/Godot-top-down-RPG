@@ -8,12 +8,18 @@ var player_alive = true
 enum MoveDirection {NONE, UP, DOWN, LEFT, RIGHT}
 enum AnimationType {WALK, IDLE}
 
-const speed = 100
+const speed = 75
 var direction: MoveDirection = MoveDirection.NONE
 
-func _physics_process(delta: float):
+func _physics_process(delta):
 	player_movement(delta )
 	enemy_attack()
+	
+	if health <= 0:
+		player_alive = false #end screen
+		health = 0
+		print("player has been killed")
+		self.queue_free()
 
 
 func player_movement(_delta):
@@ -80,15 +86,21 @@ func play_anim(type: AnimationType):
 func player():
 	pass
 
-func _on_player_range_body_entered(body: Node2D) -> void:
-	if body.has_method("enemy"):
+func _on_player_range_body_entered(body):
+	if body.has_method("slime"):
 		enemy_inrange = true
 
 
-func _on_player_range_body_exited(body: Node2D) -> void:
-	if body.has_method("enemy"):
+func _on_player_range_body_exited(body):
+	if body.has_method("slime"):
 		enemy_inrange = false
 
 func enemy_attack(): 
-	if enemy_inrange:
-		print("took damage")
+	if enemy_inrange and enemy_attack_cooldown:
+		health = health - 20
+		enemy_attack_cooldown = false
+		$attack_cooldown.start()
+		print(health)
+		
+func _on_attack_cooldown_timeout() -> void:
+	enemy_attack_cooldown = true # Replace with function body.
