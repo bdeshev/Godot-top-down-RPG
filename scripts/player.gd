@@ -1,5 +1,10 @@
 extends CharacterBody2D
 
+var enemy_inrange = false
+var enemy_attack_cooldown = true
+var health = 100
+var player_alive = true
+
 enum MoveDirection {NONE, UP, DOWN, LEFT, RIGHT}
 enum AnimationType {WALK, IDLE}
 
@@ -8,6 +13,7 @@ var direction: MoveDirection = MoveDirection.NONE
 
 func _physics_process(delta: float):
 	player_movement(delta )
+	enemy_attack()
 
 
 func player_movement(_delta):
@@ -70,3 +76,19 @@ func play_anim(type: AnimationType):
 			anim.play("back_walk")
 		elif type == AnimationType.IDLE:
 			anim.play("front_idle")
+
+func player():
+	pass
+
+func _on_player_range_body_entered(body: Node2D) -> void:
+	if body.has_method("enemy"):
+		enemy_inrange = true
+
+
+func _on_player_range_body_exited(body: Node2D) -> void:
+	if body.has_method("enemy"):
+		enemy_inrange = false
+
+func enemy_attack(): 
+	if enemy_inrange:
+		print("took damage")

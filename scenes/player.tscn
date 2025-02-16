@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://cry7e7kxpxqw5"]
+[gd_scene load_steps=57 format=3 uid="uid://cry7e7kxpxqw5"]
 
 [ext_resource type="Texture2D" uid="uid://bq512intgmqqh" path="res://assets/mystic_woods_free_2.2/sprites/characters/player.png" id="1_a82ca"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_gpt4o"]
@@ -417,6 +417,9 @@ animations = [{
 radius = 4.0
 height = 8.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5pna6"]
+radius = 15.0
+
 [node name="player" type="CharacterBody2D"]
 light_mask = 512
 visibility_layer = 512
@@ -438,3 +441,12 @@ autoplay = "front_idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
 shape = SubResource("CapsuleShape2D_dnjwn")
+
+[node name="player_range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_range"]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_5pna6")
+
+[connection signal="body_entered" from="player_range" to="." method="_on_player_range_body_entered"]
+[connection signal="body_exited" from="player_range" to="." method="_on_player_range_body_exited"]

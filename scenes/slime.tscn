@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://crf386xhybwe5"]
+[gd_scene load_steps=21 format=3 uid="uid://crf386xhybwe5"]
 
 [ext_resource type="Texture2D" uid="uid://ct6e568kjq6om" path="res://assets/mystic_woods_free_2.2/sprites/characters/slime.png" id="1_2gg3u"]
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_v2f7u"]
@@ -125,6 +125,9 @@ radius = 5.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_v4kw0"]
 radius = 54.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6fjxr"]
+radius = 14.0
+
 [node name="slime" type="CharacterBody2D"]
 y_sort_enabled = true
 collision_layer = 2
@@ -150,6 +153,12 @@ collision_mask = 2
 y_sort_enabled = true
 position = Vector2(-5, -4)
 shape = SubResource("CircleShape2D_v4kw0")
+
+[node name="enemy_range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_range"]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_6fjxr")
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]

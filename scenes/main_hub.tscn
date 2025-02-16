@@ -111,8 +111,13 @@ tile_set = SubResource("TileSet_av1t7")
 position = Vector2(121, 80)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
-position = Vector2(0, 12)
+position = Vector2(1, -6)
 zoom = Vector2(4, 4)
+limit_left = -16
+limit_top = -32
+limit_right = 752
+limit_bottom = 255
+limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="enemies" type="Node" parent="."]
