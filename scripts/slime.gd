@@ -5,7 +5,13 @@ var speed = 52
 var player_chase = false
 var player = null
 
+var health = 100
+var player_inrange = false
+
 func _physics_process(delta):
+	deal_with_damage()
+	
+	
 	if player_chase:
 		position += (player.position - position)/speed
 		
@@ -29,3 +35,19 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 
 func slime():
 	pass
+
+
+func _on_enemy_range_body_entered(body: Node2D) -> void:
+	if body.has_method("player"):
+		player_inrange = true 
+
+func _on_enemy_range_body_exited(body: Node2D) -> void:
+	if body.has_method("player"):
+		player_inrange = false
+		
+func deal_with_damage():
+	if player_inrange and Global.player_current_attack == true:
+		health = health - 20
+		print ("slime = ", health)
+		if health <= 0:
+			self.queue_free() 
